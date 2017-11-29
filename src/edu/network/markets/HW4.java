@@ -105,15 +105,35 @@ public class HW4{
 
     // This method, should construct and return a DirectedGraph encoding the right example in fig 15.1
     // Use the following indexes: A:0, B:1, C:2, Z1:3, Z2:4
-    public static DirectedGraph graph15_1Right(){
-        throw new RuntimeException("Implement me!");
+    public static DirectedGraph graph15_1Right() {
+        DirectedGraph graph151_right = new DirectedGraph(5);
+        graph151_right.addEdge(0, 1);
+        graph151_right.addEdge(0, 3);
+        graph151_right.addEdge(0, 4);
+        graph151_right.addEdge(1, 2);
+        graph151_right.addEdge(2, 0);
+        graph151_right.addEdge(3, 4);
+        graph151_right.addEdge(4, 3);
+
+        return graph151_right;
+        //throw new RuntimeException("Implement me!");
     }
 
+    public static double[] extraGraph15_1Right () {
+        DirectedGraph graph151_right = graph15_1Right();
+        double[] pageRank = scaledPageRank(graph151_right, 20, (double)1 / 7);
+        for (double score: pageRank) {
+            System.out.println(score);
+        }
+
+        return pageRank;
+    }
 
     // This method, should construct and return a DirectedGraph encoding example 15.2
     // Use the following indexes: A:0, B:1, C:2, A':3, B':4, C':5
     public static DirectedGraph graph15_2(){
         throw new RuntimeException("Implement me!");
+
     }
 
     // This method, should construct and return a DirectedGraph of your choice with at least 10 nodes
@@ -146,11 +166,12 @@ public class HW4{
     // All the code necessary for measurements for question 8b should go in the main function.
     public static void main(String[] args) throws Throwable {
         //System.out.println("Implement me!");
-        DirectedGraph g151Left = graph15_1Left();
+        /*DirectedGraph g151Left = graph15_1Left();
         double[] pageRank = scaledPageRank(g151Left, 1, (double)1 / 7);
         for (double score: pageRank) {
             System.out.println(score);
-        }
+        }*/
+        extraGraph15_1Right();
         //return;
     }
 }
