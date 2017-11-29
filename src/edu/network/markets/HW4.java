@@ -1,9 +1,6 @@
 package edu.network.markets;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class HW4{
@@ -50,16 +47,32 @@ public class HW4{
 
 
     //	This method, given a directed graph, should run the epsilon-scaled page-rank
-    //	algorithm for num-iter iterations and return an array where position i contains the weight of the corresponsing node.
+    //	algorithm for num-iter iterations and return an array where position i contains the weight of the corresponding node.
     //	In the case of 0 iterations, all nodes should have weight 1/number_of_nodes
-    public static double[] scaledPageRank(DirectedGraph g, int num_iter, double eps){
-        throw new RuntimeException("Implement me!");
+    public static double[] scaledPageRank(DirectedGraph g, int num_iter, double eps) {
+
+        double[] scores = new double[g.numberOfNodes];
+        double iniScore = 1 / (float)g.numberOfNodes;
+        Arrays.fill(scores, iniScore);
+
+
+
+
+        // throw nw RuntimeException("Implement me!");
     }
 
     // This method, should construct and return a DirectedGraph encoding the left example in fig 15.1
     // Use the following indexes: A:0, B:1, C:2, Z:3
-    public static DirectedGraph graph15_1Left(){
-        throw new RuntimeException("Implement me!");
+    public static DirectedGraph graph15_1Left() {
+        DirectedGraph graph151_left = new DirectedGraph(4);
+        graph151_left.addEdge(0, 1);
+        graph151_left.addEdge(1, 2);
+        graph151_left.addEdge(2, 0);
+        graph151_left.addEdge(0, 4);
+        graph151_left.addEdge(4, 4);
+
+        return graph151_left
+        // throw new RuntimeException("Implement me!");
     }
 
     // This method, should construct and return a DirectedGraph encoding the right example in fig 15.1
@@ -105,12 +118,7 @@ public class HW4{
     // All the code necessary for measurements for question 8b should go in the main function.
     public static void main(String[] args) throws Throwable {
         //System.out.println("Implement me!");
-        DirectedGraph graph151_1 = new DirectedGraph(4);
-        graph151_1.addEdge(0, 1);
-        graph151_1.addEdge(1, 2);
-        graph151_1.addEdge(2, 0);
-        graph151_1.addEdge(0, 4);
-        graph151_1.addEdge(4, 4);
+
 
         //System.out.println(graph151_1.numberOfNodes);
 
