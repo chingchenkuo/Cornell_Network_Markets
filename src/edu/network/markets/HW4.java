@@ -8,6 +8,7 @@ public class HW4{
     public static class DirectedGraph {
 
         int numberOfNodes = 0;
+        // key: node, value: neighbors pointed by the node
         Map<Integer, List<Integer>> edges = new HashMap<>();
 
 
@@ -32,11 +33,24 @@ public class HW4{
             return (neighbors.contains(destination))? true : false;
         }
 
-        // This method should return a list of all the nodes u such that the edge (origin_node,u) is
+        // This method should return a list of all the nodes u such that the edge (origin_node, u) is
         // part of the graph.
         List<Integer> edgesFrom(int origin) {
             List neighbors = edges.getOrDefault(origin, new ArrayList<Integer>());
             return neighbors;
+        }
+
+        List<Integer> edgesTo(int dest) {
+
+            List<Integer> edgesTo = new ArrayList<>();
+            for (Map.Entry<Integer, List<Integer>> entry : edges.entrySet()) {
+                List<Integer> neighbors = entry.getValue();
+                if (neighbors.contains(dest)) {
+                    edgesTo.add(entry.getKey());
+                }
+            }
+
+            return edgesTo;
         }
 
         // This method should return the number of nodes in the graph
@@ -51,13 +65,27 @@ public class HW4{
     //	In the case of 0 iterations, all nodes should have weight 1/number_of_nodes
     public static double[] scaledPageRank(DirectedGraph g, int num_iter, double eps) {
 
-        double[] scores = new double[g.numberOfNodes];
-        double iniScore = 1 / (float)g.numberOfNodes;
+        int numberOfNodes = g.numberOfNodes;
+        double[] scores = new double[numberOfNodes];
+        double iniScore = 1 / (float)numberOfNodes;
         Arrays.fill(scores, iniScore);
+        for (int i = 0; i < num_iter; i++) {
+            double[] scores_tmp = new double[numberOfNodes];
+            System.arraycopy(scores, 0, scores_tmp, 0, scores.length);
 
+            for (int j = 0; j < numberOfNodes; j++) {
 
+                double neiborContribution = 0;
+                for (int node: g.edgesTo(j)) {
+                    int outDegree = g.edgesFrom(node).size();
+                    neiborContribution += scores_tmp[node] / (float)outDegree;
+                }
 
+                scores[j] = (eps / numberOfNodes) + (1 - eps) * neiborContribution;
+            }
+        }
 
+        return scores;
         // throw nw RuntimeException("Implement me!");
     }
 
@@ -71,7 +99,7 @@ public class HW4{
         graph151_left.addEdge(0, 4);
         graph151_left.addEdge(4, 4);
 
-        return graph151_left
+        return graph151_left;
         // throw new RuntimeException("Implement me!");
     }
 
@@ -118,14 +146,11 @@ public class HW4{
     // All the code necessary for measurements for question 8b should go in the main function.
     public static void main(String[] args) throws Throwable {
         //System.out.println("Implement me!");
-
-
-        //System.out.println(graph151_1.numberOfNodes);
-
-        for (int neighbor: graph151_1.edgesFrom(0)) {
-            System.out.println(neighbor);
+        DirectedGraph g151Left = graph15_1Left();
+        double[] pageRank = scaledPageRank(g151Left, 1, (double)1 / 7);
+        for (double score: pageRank) {
+            System.out.println(score);
         }
-
         //return;
     }
 }
